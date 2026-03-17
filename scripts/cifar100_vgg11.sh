@@ -5,6 +5,6 @@ python main_train.py \
         --tau 1.0 \
         --optim sgd \
         --lr 0.1 \
-        --loss temporalwiseloss \
+        --loss TGloss \
         -b 64 \
         -T 8 

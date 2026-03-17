@@ -36,7 +36,7 @@ def train(model, device, train_loader, criterion, optimizer, T, num_labels, dvs,
                 loss = criterion(outputs.mean(1), labels)
             elif args.loss == 'TET':
                 loss = TET_loss(outputs, labels, criterion, means=1, lamb=0.05)
-            elif args.loss == 'temporalwiseloss':
+            elif args.loss == 'TGloss':
                 SM_output = outputs.mean(1)
                 fy = F.nll_loss(F.log_softmax(SM_output, dim=1), labels.to(device))
                 grad_x = torch.autograd.grad(fy, images_t, retain_graph=True, create_graph=True)[0]  
@@ -44,7 +44,7 @@ def train(model, device, train_loader, criterion, optimizer, T, num_labels, dvs,
 
                 ce = criterion(outputs.mean(1), labels)
                 loss = ce + 100 * temporalwiseloss
-                print("ce:{}, temporalwiseloss:{}".format(ce, temporalwiseloss))
+                print("ce:{}, TGloss:{}".format(ce, temporalwiseloss))
 
         running_loss += loss.item()
         optimizer.zero_grad()

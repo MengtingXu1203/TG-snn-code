@@ -36,25 +36,6 @@ def get_logger(filename, verbosity=1, name=None):
     logger.addHandler(sh)
     return logger
 
-
-def BPTT_attack(model, image, T):
-    model.set_simulation_time(T, mode='bptt')
-    output = model(image)
-    model.set_simulation_time(T)
-    return output
-
-def BPTR_attack(model, image, T):
-    model.set_simulation_time(T, mode='bptr')
-    output = model(image).mean(0)
-    model.set_simulation_time(T)
-    return output
-
-def Act_attack(model, image, T):
-    model.set_simulation_time(0)
-    output = model(image)
-    model.set_simulation_time(T)
-    return output
-
 def TET_loss(outputs, labels, criterion, means, lamb):
     T = outputs.size(1)
     Loss_es = 0
